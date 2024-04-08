@@ -70,6 +70,6 @@ function playRound(playerChoice, computerChoice) {
     }
 }
 
-const playerChoice = "rock-lee";
+const playerChoice = "rock";
 const computerChoice = getComputerChoice();
 console.log(playRound(playerChoice, computerChoice));

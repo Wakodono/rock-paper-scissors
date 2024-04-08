@@ -1,5 +1,3 @@
-/* STEP 1 Your game is going to play against the computer, so begin with a function called getComputerChoice that will randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’. We’ll use this function in the game to make the computer’s play. Tip: use the console to make sure this is returning the expected output before moving to the next step! */
-
 /*
 Function: getComputerChoice
 
@@ -16,7 +14,7 @@ Steps:
 
 function getComputerChoice() {
     let computerChoice;
-    const randomisedChoice = Math.floor(Math.random() * 3);
+    let randomisedChoice = Math.floor(Math.random() * 3);
 
     if (randomisedChoice === 0) {
         computerChoice = 'Rock';
@@ -29,4 +27,43 @@ function getComputerChoice() {
     return computerChoice;
 }
 
-console.log(getComputerChoice())
+// console.log(getComputerChoice())
+
+/*
+START playRound function
+    GET playerChoice
+    GET computerChoice
+    CONVERT playerChoice to lowercase
+    IF playerChoice is not rock, paper, or scissors THEN
+        RETURN "Invalid choice"
+    END IF
+    IF playerChoice equals computerChoice THEN
+        RETURN "It's a tie!"
+    ELSE IF (playerChoice is rock AND computerChoice is scissors) OR
+            (playerChoice is paper AND computerChoice is rock) OR
+            (playerChoice is scissors AND computerChoice is paper) THEN
+        RETURN "You win! [playerChoice] beats [computerChoice]"
+    ELSE
+        RETURN "You lose! [computerChoice] beats [playerChoice]"
+    END IF
+END playRound function
+*/
+
+function playRound(playerChoice, computerChoice) {
+
+    if (playerChoice === computerChoice) {
+        return "It's a tie!"
+    } else if (
+        playerChoice == 'rock' && computerChoice == 'scissors' || 
+        playerChoice == 'paper' && computerChoice == 'rock' || 
+        playerChoice == 'scissors' && computerChoice == 'paper'
+    ) {
+        return `You win! ${playerChoice} beats ${computerChoice}`
+    } else {
+        return `You lose! ${computerChoice} beats ${playerChoice}` 
+    }
+}
+
+const playerChoice = "rock";
+const computerChoice = getComputerChoice();
+console.log(playRound(playerChoice, computerChoice));

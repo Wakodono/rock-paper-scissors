@@ -4,12 +4,11 @@ Function: getComputerChoice
 Description: This function randomly selects and returns one of the choices ('Rock', 'Paper', or 'Scissors') for the computer.
 
 Steps:
-1. Initialize a function named getComputerChoice.
-2. Inside the function, generate a random number between 0 and 1 using the Math.random() method.
-3. Round the random number to the nearest integer using the Math.round() method to get either 0 or 1.
-4. Map each possible integer value to one of the choices: 0 -> 'Rock', 1 -> 'Paper', 2 -> 'Scissors'.
-5. Return the corresponding choice based on the rounded random number.
-
+ Initialize a function named getComputerChoice.
+    Initialise a variable to store the result of our mapping
+    Generate a random number between 0 and 3 using the Math.random() and Math.round() methods.
+    Map each possible integer value to one of the choices: 0 -> 'rock', 1 -> 'paper', 2 -> 'scissors'.
+    Return the corresponding choice based on the rounded random number.
  */
 
 function getComputerChoice() {
@@ -17,22 +16,19 @@ function getComputerChoice() {
     let randomisedChoice = Math.floor(Math.random() * 3);
 
     if (randomisedChoice === 0) {
-        computerChoice = 'Rock';
+        computerChoice = 'rock';
     } else if (randomisedChoice === 1) {
-        computerChoice = 'Paper';
+        computerChoice = 'paper';
     } else if (randomisedChoice === 2) {
-        computerChoice = 'Scissors';
+        computerChoice = 'scissors';
     }
 
     return computerChoice;
 }
 
-// console.log(getComputerChoice())
-
 /*
 START playRound function
-    GET playerChoice
-    GET computerChoice
+    In parentheses let the computer know to expect a playerSelection and a computerSelection 
     CONVERT playerChoice to lowercase
     IF playerChoice is not rock, paper, or scissors THEN
         RETURN "Invalid choice"
@@ -49,27 +45,61 @@ START playRound function
 END playRound function
 */
 
-function playRound(playerChoice, computerChoice) {
+function playRound(playerSelection, computerSelection) {
+    playerSelection.toLowerCase()
     
-    playerChoice.toLowerCase()
-
-    if (playerChoice !== 'rock' && playerChoice !== 'scissors' && playerChoice !== 'paper') {
+    if (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors') {
         return "Invalid choice"
     }
-    
-    if (playerChoice === computerChoice) {
-        return "It's a tie!"
+
+    if (playerSelection === computerSelection) {
+        "It's a tie!"
     } else if (
-        playerChoice == 'rock' && computerChoice == 'scissors' || 
-        playerChoice == 'paper' && computerChoice == 'rock' || 
-        playerChoice == 'scissors' && computerChoice == 'paper'
+        playerSelection === 'rock' && computerSelection === 'scissors' ||
+        playerSelection === 'paper' && computerSelection === 'rock' ||
+        playerSelection === 'scissors' && computerSelection === 'paper'
     ) {
-        return `You win! ${playerChoice} beats ${computerChoice}`
+        return `You win! ${playerSelection} beats ${computerSelection}`
     } else {
-        return `You lose! ${computerChoice} beats ${playerChoice}` 
+        return `You lose! ${computerSelection} beats ${playerSelection}`
     }
 }
 
-const playerChoice = "rock";
-const computerChoice = getComputerChoice();
-console.log(playRound(playerChoice, computerChoice));
+const playerSelection = 'rock'
+const computerSelection = getComputerChoice()
+console.log(playRound(playerSelection, computerSelection))
+
+// 1. Define a function called playGame().
+// 2. Initialize variables to keep track of player and computer scores.
+// 3. Use a loop to play 5 rounds of the game:
+//     for (round = 1; round <= 5; round++) {
+
+//         3.1. Prompt the user to input their choice for this round using prompt().
+//             playerChoice = prompt("Enter your choice (rock, paper, or scissors):");
+
+//         3.2. Generate the computer's choice for this round using getComputerChoice().
+//             computerChoice = getComputerChoice();
+
+//         3.3. Call the playRound() function with playerChoice and computerChoice as arguments to determine the winner of this round.
+//             roundResult = playRound(playerChoice, computerChoice);
+
+//         3.4. If the roundResult is "You win!", increment playerScore by 1.
+//             If roundResult equals "You win!":
+//                 playerScore += 1
+
+//         3.5. If the roundResult is "You lose!", increment computerScore by 1.
+//             If roundResult equals "You lose!":
+//                 computerScore += 1
+
+//         3.6. Log the result of this round to the console using console.log().
+//             Log roundResult to the console.
+//     }
+
+
+// 4. Determine the winner of the game based on the scores.
+//     START IF
+//     If playerScore is greater than computerScore, declare the player as the winner.
+//     Else if computerScore is greater than playerScore, declare the computer as the winner.
+//     Else, declare it as a tie.
+//     END IF
+

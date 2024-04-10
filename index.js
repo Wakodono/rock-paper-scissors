@@ -53,7 +53,7 @@ function playRound(playerSelection, computerSelection) {
     }
 
     if (playerSelection === computerSelection) {
-        "It's a tie!"
+        return "It's a tie!"
     } else if (
         playerSelection === 'rock' && computerSelection === 'scissors' ||
         playerSelection === 'paper' && computerSelection === 'rock' ||
@@ -65,41 +65,61 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-const playerSelection = 'rock'
-const computerSelection = getComputerChoice()
-console.log(playRound(playerSelection, computerSelection))
+// playRound Test suite
+// const playerSelection = 'rock'
+// const computerSelection = getComputerChoice()
+// console.log(playRound(playerSelection, computerSelection))
 
-// 1. Define a function called playGame().
-// 2. Initialize variables to keep track of player and computer scores.
-// 3. Use a loop to play 5 rounds of the game:
-//     for (round = 1; round <= 5; round++) {
+/* START playGame function
+    Initialise variables playerScore and computerScore to keep track of each player's score
+    FOR each round from 1 to 5 DO
+        Prompt the player to enter their choice (rock, paper, or scissors) and store it in playerSelection
+        Generate a random choice for the computer using the getComputerChoice function and store it in computerSelection
+        Determine the result of the round by calling the playRound function with playerSelection and computerSelection
+        IF the result is "You win!" THEN
+            Increment the player's score by 1
+        ELSE IF the result is "You lose!" THEN
+            Increment the computer's score by 1
+        END IF
+        Display the result of the round in the console
+    END FOR
+    Determine the winner of the game based on the scores:
+        IF playerScore is greater than computerScore THEN
+            Display "Player wins the game!" in the console
+        ELSE IF computerScore is greater than playerScore THEN
+            Display "Computer wins the game!" in the console
+        ELSE
+            Display "We have a tie!" in the console
+        END IF
+END playGame function
+*/
 
-//         3.1. Prompt the user to input their choice for this round using prompt().
-//             playerChoice = prompt("Enter your choice (rock, paper, or scissors):");
+function playGame() {
+    let playerScore = 0
+    let computerScore = 0
 
-//         3.2. Generate the computer's choice for this round using getComputerChoice().
-//             computerChoice = getComputerChoice();
+    for (round = 0; round <= 5; round++) {
+        const playerSelection = prompt("Choose your weapon! Rock, paper or scissors?:")
+        const computerSelection = getComputerChoice()
 
-//         3.3. Call the playRound() function with playerChoice and computerChoice as arguments to determine the winner of this round.
-//             roundResult = playRound(playerChoice, computerChoice);
+        result = playRound(playerSelection, computerSelection)
 
-//         3.4. If the roundResult is "You win!", increment playerScore by 1.
-//             If roundResult equals "You win!":
-//                 playerScore += 1
+        if (result.includes('You win')) {
+            playerScore++
+        } else if (result.includes('You lose')) {
+            computerScore++
+        }
 
-//         3.5. If the roundResult is "You lose!", increment computerScore by 1.
-//             If roundResult equals "You lose!":
-//                 computerScore += 1
+        console.log(result)
+    }
 
-//         3.6. Log the result of this round to the console using console.log().
-//             Log roundResult to the console.
-//     }
+    if (playerScore > computerScore) {
+        console.log("You win player!")
+    } else if (computerScore > playerScore) {
+        console.log("Oh no! The computer wins!")
+    } else {
+        console.log("We have a tie!")
+    }
+}
 
-
-// 4. Determine the winner of the game based on the scores.
-//     START IF
-//     If playerScore is greater than computerScore, declare the player as the winner.
-//     Else if computerScore is greater than playerScore, declare the computer as the winner.
-//     Else, declare it as a tie.
-//     END IF
-
+playGame()

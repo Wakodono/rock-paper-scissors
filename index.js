@@ -98,21 +98,6 @@ function playGame() {
     let playerScore = 0
     let computerScore = 0
 
-    for (round = 0; round <= 5; round++) {
-        const playerSelection = prompt("Choose your weapon! Rock, paper or scissors?:")
-        const computerSelection = getComputerChoice()
-
-        result = playRound(playerSelection, computerSelection)
-
-        if (result.includes('You win')) {
-            playerScore++
-        } else if (result.includes('You lose')) {
-            computerScore++
-        }
-
-        console.log(result)
-    }
-
     if (playerScore > computerScore) {
         console.log("You win player!")
     } else if (computerScore > playerScore) {

@@ -1,29 +1,29 @@
 /*
-Function: getComputerChoice
+Function: getComputerSelection
 
 Description: This function randomly selects and returns one of the choices ('Rock', 'Paper', or 'Scissors') for the computer.
 
 Steps:
- Initialize a function named getComputerChoice.
+ Initialize a function named getComputerSelection.
     Initialise a variable to store the result of our mapping
     Generate a random number between 0 and 3 using the Math.random() and Math.round() methods.
     Map each possible integer value to one of the choices: 0 -> 'rock', 1 -> 'paper', 2 -> 'scissors'.
     Return the corresponding choice based on the rounded random number.
  */
 
-function getComputerChoice() {
-    let computerChoice;
+function getComputerSelection() {
+    let computerSelection;
     let randomisedChoice = Math.floor(Math.random() * 3);
 
     if (randomisedChoice === 0) {
-        computerChoice = 'rock';
+        computerSelection = 'rock';
     } else if (randomisedChoice === 1) {
-        computerChoice = 'paper';
+        computerSelection = 'paper';
     } else if (randomisedChoice === 2) {
-        computerChoice = 'scissors';
+        computerSelection = 'scissors';
     }
 
-    return computerChoice;
+    return computerSelection;
 }
 
 /*
@@ -33,14 +33,14 @@ START playRound function
     IF playerChoice is not rock, paper, or scissors THEN
         RETURN "Invalid choice"
     END IF
-    IF playerChoice equals computerChoice THEN
+    IF playerChoice equals computerSelection THEN
         RETURN "It's a tie!"
-    ELSE IF (playerChoice is rock AND computerChoice is scissors) OR
-            (playerChoice is paper AND computerChoice is rock) OR
-            (playerChoice is scissors AND computerChoice is paper) THEN
-        RETURN "You win! [playerChoice] beats [computerChoice]"
+    ELSE IF (playerChoice is rock AND computerSelection is scissors) OR
+            (playerChoice is paper AND computerSelection is rock) OR
+            (playerChoice is scissors AND computerSelection is paper) THEN
+        RETURN "You win! [playerChoice] beats [computerSelection]"
     ELSE
-        RETURN "You lose! [computerChoice] beats [playerChoice]"
+        RETURN "You lose! [computerSelection] beats [playerChoice]"
     END IF
 END playRound function
 */
@@ -53,68 +53,39 @@ function playRound(playerSelection, computerSelection) {
     }
 
     if (playerSelection === computerSelection) {
-        return "It's a tie!"
+        displayResult("It's a tie!"); 
     } else if (
         playerSelection === 'rock' && computerSelection === 'scissors' ||
         playerSelection === 'paper' && computerSelection === 'rock' ||
         playerSelection === 'scissors' && computerSelection === 'paper'
     ) {
-        return `You win! ${playerSelection} beats ${computerSelection}`
+        displayResult(`You win! ${playerSelection} beats ${computerSelection}`);
     } else {
-        return `You lose! ${computerSelection} beats ${playerSelection}`
+        displayResult(`You lose! ${computerSelection} beats ${playerSelection}`); 
     }
 }
 
 // playRound Test suite
 // const playerSelection = 'rock'
-// const computerSelection = getComputerChoice()
+// const computerSelection = getComputerSelection()
 // console.log(playRound(playerSelection, computerSelection))
 
 
-// START handleButtonClick function
-//     In parentheses, accept an event parameter
-//     Determine which button was clicked
-//     Call the playRound function with the corresponding playerSelection ("rock", "paper", or "scissors")
-// END handleButtonClick function
-
-// START playRound function
-//     In parentheses, expect parameters for playerSelection and computerSelection
-//     Convert playerSelection to lowercase
-//     If playerSelection is not "rock", "paper", or "scissors", then
-//         Return "Invalid choice"
-//     End if
-//     If playerSelection equals computerSelection, then
-//         Return "It's a tie!"
-//     Else if (playerSelection is "rock" and computerSelection is "scissors") or
-//             (playerSelection is "paper" and computerSelection is "rock") or
-//             (playerSelection is "scissors" and computerSelection is "paper"), then
-//         Return "You win! [playerSelection] beats [computerSelection]"
-//     Else
-//         Return "You lose! [computerSelection] beats [playerSelection]"
-//     End if
-// END playRound function
+// FUNCTION handleButtonClick, accepting event as parameter
+// SET button to event.target
+// IF button.tagName is equal to 'BUTTON' THEN
+//     SET playerSelection to button.textContent converted to lowercase
+//     CALL playRound with playerSelection as argument
+// END IF
+// END FUNCTION
 
 function handleButtonClick(event) {
-    playRound(playerSelection);
-}
-
-// ADD an event listener to rockButton for the "click" event, with a callback function that takes an event as its parameter
-//     SET button to the target element of the event
-//     IF the tag name of button is equal to 'BUTTON' THEN
-//         SET playerSelection to the text content of button, converted to lowercase
-//         CALL playRound function with playerSelection as argument
-//     END IF
-
-const rockButton = document.querySelector(".button-list");
-
-rockButton.addEventListener("click", event => {
-    const button = event.target;
-    if (button.tagName === 'BUTTON') {
-        const playerSelection = button.textContent.toLowerCase();
-
+    const btn = event.target;
+    const playerSelection = btn.textContent.toLowerCase()
+    if (btn.tagName === 'BUTTON') {
         playRound(playerSelection);
-    };
-})
+    }
+}
 
 
 /* START playGame function
@@ -135,12 +106,19 @@ function playGame() {
     let computerScore = 0
 
     if (playerScore > computerScore) {
-        console.log("You win player!")
+        displayResult("You win player!");
     } else if (computerScore > playerScore) {
-        console.log("Oh no! The computer wins!")
+        displayResult("Oh no! The computer wins!");
     } else {
-        console.log("We have a tie!")
+        displayResult("We have a tie!")
     }
 }
 
-// playGame()
+function displayResult (result) {
+    const display = document.querySelector('.results')
+
+    const para = document.createElement("p");
+    para.textContent = result;
+    display.appendChild(para);
+
+}

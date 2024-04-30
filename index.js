@@ -27,7 +27,7 @@ function getComputerSelection() {
 }
 
 /*
-START playRound function
+START playGame function
     In parentheses let the computer know to expect a playerSelection and a computerSelection 
     CONVERT playerChoice to lowercase
     IF playerChoice is not rock, paper, or scissors THEN
@@ -42,33 +42,49 @@ START playRound function
     ELSE
         RETURN "You lose! [computerSelection] beats [playerChoice]"
     END IF
-END playRound function
+END playGame function
 */
 
-function playRound(playerSelection, computerSelection) {
-    playerSelection.toLowerCase()
+let playerScore = 0;
+let computerScore = 0;
 
+function playGame(playerSelection, computerSelection) {
     if (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors') {
         return "Invalid choice"
     }
 
     if (playerSelection === computerSelection) {
-        displayResult("It's a tie!"); 
+        displayResult("It's a tie!");
     } else if (
         playerSelection === 'rock' && computerSelection === 'scissors' ||
         playerSelection === 'paper' && computerSelection === 'rock' ||
         playerSelection === 'scissors' && computerSelection === 'paper'
     ) {
-        displayResult(`You win! ${playerSelection} beats ${computerSelection}`);
+        playerScore++;
+        displayResult(`You win! ${playerSelection} beats ${computerSelection}`)
     } else {
-        displayResult(`You lose! ${computerSelection} beats ${playerSelection}`); 
+        computerScore++;
+        displayResult(`You lose! ${computerSelection} beats ${playerSelection}`)
     }
 }
+
 
 // playRound Test suite
 // const playerSelection = 'rock'
 // const computerSelection = getComputerSelection()
 // console.log(playRound(playerSelection, computerSelection))
+
+function isGameOver() {
+    if (playerScore === 5) {
+        displayResult(`You win! The game is now over!`)
+        return true;
+    } else if (computerScore === 5) {
+        displayResult(`You lose! The pesky computer got to a score of 5 first.`)
+        return true;
+    } else {
+        return false;
+    }
+}
 
 
 // FUNCTION handleButtonClick, accepting event as parameter
@@ -80,45 +96,41 @@ function playRound(playerSelection, computerSelection) {
 // END FUNCTION
 
 function handleButtonClick(event) {
-    const btn = event.target;
-    const playerSelection = btn.textContent.toLowerCase()
-    if (btn.tagName === 'BUTTON') {
-        playRound(playerSelection);
-    }
+    const button = event.target;
+    const computerSelection = getComputerSelection();
+
+    if (button.tagName === 'BUTTON') {
+        const playerSelection = button.textContent.toLowerCase();
+
+        playGame(playerSelection, computerSelection);
+
+        if (isGameOver()) buttonList.removeEventListener('click', handleButtonClick);
+    };
 }
 
+const buttonList = document.querySelector('.button-list')
 
-/* START playGame function
-    Initialise variables playerScore and computerScore to keep track of each player's score
-    Determine the winner of the game based on the scores:
-        IF playerScore is greater than computerScore THEN
-            Display "Player wins the game!" in the console
-        ELSE IF computerScore is greater than playerScore THEN
-            Display "Computer wins the game!" in the console
-        ELSE
-            Display "We have a tie!" in the console
-        END IF
-END playGame function
-*/
+buttonList.addEventListener('click', handleButtonClick)
 
-function playGame() {
-    let playerScore = 0
-    let computerScore = 0
+function displayResult(result) {
+    const displayContainer = document.querySelector('.results')
+    const display = document.createElement('div');
 
-    if (playerScore > computerScore) {
-        displayResult("You win player!");
-    } else if (computerScore > playerScore) {
-        displayResult("Oh no! The computer wins!");
-    } else {
-        displayResult("We have a tie!")
-    }
-}
-
-function displayResult (result) {
-    const display = document.querySelector('.results')
+    display.style.cssText = "margin-bottom: 12px; border: 1px solid black";
 
     const para = document.createElement("p");
     para.textContent = result;
-    display.appendChild(para);
 
+    const playerScoreDisplay = document.createElement('span');
+    playerScoreDisplay.textContent = `Player Score: ${playerScore}`;
+    playerScoreDisplay.style.marginRight = "10px";
+
+    const computerScoreDisplay = document.createElement('span');
+    computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
+
+    displayContainer.appendChild(display)
+
+    display.appendChild(para);
+    display.appendChild(playerScoreDisplay);
+    display.appendChild(computerScoreDisplay);
 }
